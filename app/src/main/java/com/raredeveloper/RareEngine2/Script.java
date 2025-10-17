@@ -26,15 +26,16 @@ public class Script extends Component {
         gv.currentScene.backgroundcolor = Color.BLUE;
         frames++;
         if(frames ==60){
-           GameObject op= o.copy(gv);
+           /*GameObject op= o.copy(gv);
            op.position.set(0,0);
            //((ImageRenderer)op.getComponentAt(0)).getFromResource(gv.getResources(),android.R.drawable.btn_plus);
-           gv.currentScene.addObject(op);
+           gv.currentScene.addObject(op);*/
            
         }
+		
 		if(gv.isDown){
 			if(o.isDown){
-				MainActivity.toast("click");
+				gv.toast("click",Toast.LENGTH_SHORT);
 			}
 		}
         super.update(o, gv);

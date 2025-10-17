@@ -13,18 +13,32 @@ public class TextRenderer extends Renderer
 	public FontFrom fontfrom = FontFrom.Default;
 	public String fontpath="";
 	public int fontResourceId=-1;
-	
+	private float prevzoom = 1,error = 1;
 	public enum FontFrom{
 		Asset,File,Default,Resource
+		}
+
+	@Override
+	public void start(GameObject o, GameView gv) {
+		super.start(o, gv);
 	}
+	
 	@Override
 	public void render(Canvas canvas, GameObject object, Paint p, GameView gv)
 	{
 		super.render(canvas, object, p, gv);
+		if(prevzoom != gv.currentScene.getZoom()){
+			prevzoom = gv.currentScene.getZoom();
+			error = calculateTextZoomCorrection(p,fontSize,prevzoom);
+		}
 		String[] s =text.split("\n");
 		float width = 0;
 		float height = 0;
-		p.setTextSize(fontSize);
+		if(!object.getLayer().equals("ui")){
+			p.setTextSize(fontSize*gv.currentScene.getZoom()*error);
+		}else{
+			p.setTextSize(fontSize*error);
+		}
 		p.setColor(textcolor);
 		p.setAntiAlias(true);
 		if(fontfrom==FontFrom.Asset){
@@ -129,5 +143,17 @@ public class TextRenderer extends Renderer
 
 	public void setBold(boolean isBold) {
 		this.isBold = isBold;
+	}
+	private float calculateTextZoomCorrection(Paint p, float fontSize, float zoom) {
+		p.setTextSize(fontSize);
+		Paint.FontMetrics fmBase = p.getFontMetrics();
+		float baseHeight = fmBase.descent - fmBase.ascent;
+
+		p.setTextSize(fontSize * zoom);
+		Paint.FontMetrics fmZoom = p.getFontMetrics();
+		float zoomedHeight = fmZoom.descent - fmZoom.ascent;
+
+		float actualScale = zoomedHeight / baseHeight;
+		return zoom / actualScale; // correction factor
 	}
 }

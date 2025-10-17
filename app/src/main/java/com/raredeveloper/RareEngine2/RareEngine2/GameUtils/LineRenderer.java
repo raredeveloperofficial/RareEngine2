@@ -2,8 +2,8 @@ package RareEngine2.GameUtils;
 
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Color;
+import android.graphics.Paint;
 import java.util.ArrayList;
 
 public class LineRenderer extends Renderer {
@@ -43,8 +43,15 @@ public class LineRenderer extends Renderer {
         p.setAntiAlias(antiAlias);
         p.setColor(color);
         for (int i = 0; i < points.size() - 1; i++) {
-            Vector2 a = points.get(i);
-            Vector2 b = points.get(i + 1);
+			Vector2 a = null;
+			Vector2 b = null;
+			if (!object.getLayer().equals("ui")) {
+				a = points.get(i).staticMultiply(gv.currentScene.getZoom());
+				b = points.get(i + 1).staticMultiply(gv.currentScene.getZoom());
+			}else{
+				a = points.get(i);
+				b = points.get(i + 1);
+			}
             canvas.drawLine(a.getX(), a.getY(), b.getX(), b.getY(), p);
         }
     }
@@ -88,4 +95,5 @@ public class LineRenderer extends Renderer {
         r.antiAlias = antiAlias;
         return r;
     }
+	
 }

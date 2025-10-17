@@ -336,12 +336,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 					Vector2 cam = new Vector2(currentScene.CameraPosition);
 					Log.d("rendercomp", "working rendercomp");
 					if (!object.getLayer().equals("ui")) {
+						
 						//canvas.translate((getWidth() / 2) ,(getHeight()/2));
-						canvas.scale(currentScene.getZoom(), currentScene.getZoom(), (getWidth() / 2) + currentScene.getPinchPoint().getX(), (getHeight() / 2) + currentScene.getPinchPoint().getY());
+						//canvas.scale(currentScene.getZoom(), currentScene.getZoom(), (getWidth() / 2) + currentScene.getPinchPoint().getX(), (getHeight() / 2) + currentScene.getPinchPoint().getY());
+						object.globalposition.multiply(currentScene.getZoom());
+						object.scale.multiply(currentScene.getZoom());
 						canvas.translate((getWidth() / 2) + object.globalposition.getX() - cam.getX(), (getHeight() / 2) - object.globalposition.getY() - cam.getY());
 						canvas.rotate(object.globalrotation);
 						((Renderer)component).render(canvas, object, paint, this);
 						canvas.restoreToCount(id);
+						object.globalposition.divide(currentScene.getZoom());
+						object.scale.divide(currentScene.getZoom());
 					} else {
 						canvas.translate((getWidth() / 2) + object.globalposition.getX(), (getHeight() / 2) - object.globalposition.getY());
 						canvas.rotate(object.globalrotation);

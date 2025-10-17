@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.widget.Toast;
 
 
 //@author raredeveloper
@@ -66,7 +67,7 @@ public class ImageRenderer extends Renderer
 			if(prevscale.getX()!=scale.getX()||prevscale.getY()!=scale.getY()||previmg!=image){
 				prevscale.set(scale.getX(),scale.getY());
 				Bitmap mapi = Bitmap.createScaledBitmap(image,(int)prevscale.getX(),(int)prevscale.getY(),!pixeled);
-				
+				//gv.toast(object.getName(),Toast.LENGTH_SHORT);
 				image = mapi;
                 previmg = image;
 				
