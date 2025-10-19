@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
         pls.addObject(o);
         pls.setBackgroundColour(Color.GRAY);
         gamev.setScene(pls.createScene(gamev));
-		gamev.currentScene.setZoom(1f);
+		gamev.currentScene.setZoom(1.7f);
 		gamev.currentScene.CameraPosition.setX(-40);;
         gamev.currentScene.backgroundcolor =(Color.BLUE);
 		
